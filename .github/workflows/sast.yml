@@ -1,21 +1,21 @@
 name: Perform Mixeway Scan
 
 jobs:
-    mixeway-scan:
-        name: Mixeway Scanning
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v1
-            - name: Prepare variables
-              id: vars
-              shell: bash
-              run: |
-                echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-                echo "::set-output name=sha_short::$(git rev-parse HEAD)"
-            - name: Prepare Mixeway docker image
-              run: |
-                docker pull mixeway/scanner:latest
-            - name: Run Scan
-              run: |
-                docker run -e OSS_USERNAME=vomoha9363@bunlets.com -e OSS_KEY=14cbaf78278bb5b03306da512e3e2f1376e6046f -e MIXEWAY_URL=https://hub.mixeway.io -e MIXEWAY_KEY=5e964e59-69c4-40ae-ab60-5084886966f7 -e MIXEWAY_PROJECT_ID=101 -e MODE=STANDALONE -e MIXEWAY_PROJECT_NAME=kazach7_lab_secure_app -e COMMIT_ID=test -e BRANCH=master -v /opt/lab_sec_audit/sast:/opt/sources mixeway/scanner:latest
+  mixeway-scan:
+    name: Mixeway Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Prepare variables
+        id: vars
+        shell: bash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=sha_short::$(git rev-parse HEAD)"
+      - name: Prepare Mixeway docker image
+        run: |
+          docker pull mixeway/scanner:latest
+      - name: Run Scan
+        run: |
+          docker run -e OSS_USERNAME=vomoha9363@bunlets.com -e OSS_KEY=14cbaf78278bb5b03306da512e3e2f1376e6046f -e MIXEWAY_URL=https://hub.mixeway.io -e MIXEWAY_KEY=5e964e59-69c4-40ae-ab60-5084886966f7 -e MIXEWAY_PROJECT_ID=101 -e MODE=STANDALONE -e MIXEWAY_PROJECT_NAME=kazach7_lab_secure_app -e COMMIT_ID=test -e BRANCH=master -v /opt/lab_sec_audit/sast:/opt/sources mixeway/scanner:latest
 
